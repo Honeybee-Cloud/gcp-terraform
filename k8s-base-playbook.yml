@@ -1,8 +1,4 @@
 ---
-- hosts: all
-  become: true
-  tasks:
-
   - name: Install packages that allow apt to be used over HTTPS
     apt:
       name: "{{ packages }}"
@@ -33,28 +29,54 @@
       update_cache: yes
     vars:
       packages:
-      - docker-ce 
-      - docker-ce-cli 
+      - docker-ce=5:19.03.14~3-0~ubuntu-xenial
+      - docker-ce-cli=5:19.03.14~3-0~ubuntu-xenial
       - containerd.io
     notify:
       - docker status
+
+  - name: Copy docker daemon config
+    copy:
+      src: daemon.json
+      dest: /etc/docker/daemon.json
+
+  - name: Restart docker
+    systemd: 
+      state: restarted
+      name: docker
+
+  - name: Add vagrant user to docker group
+    user:
+      name: vagrant
+      group: docker
 
   - name: Create the honeybee user
     user:
       name: honeybee
       groups:
-       - docker
        - sudo
+       - docker
       state: present
       shell: /bin/bash
       system: no
       createhome: yes
-      home: /home/honeybee 
+      home: /home/honeybee
+
+  - name: Creates Honeybee ssh directory
+    file:
+      path: /home/honeybee/.ssh
+      state: directory
+      owner: honeybee
+      group: honeybee
+      mode: 0700
 
   - name: Add authorized key for Honeybee
     copy:
       src: credentials/id_ed25519.pub
-      dst: /home/honeybee/.ssh/authorized_keys
+      dest: /home/honeybee/.ssh/authorized_keys
+      owner: honeybee
+      group: honeybee
+      mode: 0644
 
   - name: Remove swapfile from /etc/fstab
     mount:
@@ -90,11 +112,6 @@
         - kubelet 
         - kubeadm 
         - kubectl
-
-  - name: Configure node ip
-    lineinfile:
-      path: /etc/default/kubelet
-      line: KUBELET_EXTRA_ARGS=--node-ip={{ node_ip }}
 
   - name: Restart kubelet
     service:

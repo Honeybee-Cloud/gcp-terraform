@@ -2,10 +2,14 @@
 - hosts: all
   become: true
   tasks:
-  - include: k8s-base-playbook.yml
+  - import_tasks: k8s-base-playbook.yml
 
   - name: Copy the join command to server location
-    copy: src=join-command dest=/tmp/join-command.sh mode=0777
+    copy: src=/tmp/join-command dest=/tmp/join-command.sh mode=0777
 
   - name: Join the node to cluster
     command: sh /tmp/join-command.sh
+      
+  handlers:
+    - name: docker status
+      service: name=docker state=started
