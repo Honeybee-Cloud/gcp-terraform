@@ -33,13 +33,13 @@ resource "google_project" "project" {
 }
 
 resource "google_compute_subnetwork" "vpc_network_subnet" {
-  name          = "k8s-nodes-subnet"
+  name          = "${var.subnet_name}"
   ip_cidr_range = "${var.subnet_range}"
   region        = "${var.region}"
   network       = google_compute_network.vpc_network.id
 }
 
 resource "google_compute_network" "vpc_network" {
-  name = "k8s-vpc"
+  name = "${var.network_name}"
   auto_create_subnetworks = false
 }

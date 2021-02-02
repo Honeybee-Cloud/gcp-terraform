@@ -19,8 +19,18 @@ variable master_ip {
 }
 
 variable subnet_range {
-  description = "IP range of the subnet"
-  default     = "10.240.0.0/24"
+  description = "Subnet range"
+  default     = "10.128.0.0/24"
+}
+
+variable subnet_name {
+  description = "Name of the subnet"
+  default     = "k8s-nodes-subnet"
+}
+
+variable network_name {
+  description = "Name of the network"
+  default     = "k8s-vpc"
 }
 
 variable k8s_version {
@@ -60,16 +70,25 @@ variable calico_version {
   default     = "3.5"
 }
 
-variable network {
-  description = "The network the cluster is to to be deployed into"
-  default     = "default"
-}
-
 variable google_apis_url {
   description = "The google apis url"
   default     = "https://content.googleapis.com/compute/v1/projects"
 }
 
-variable startup_script {
+variable startup_script_master {
+  description = "The startup script to run on the master"
+  default     = "sudo apt update && sudo apt install git ansible; sudo ansible-playbook k8s-master-playbook.yml"
+}
+
+variable startup_script_worker {
+  description = "The startup script to run on the workers"
   default     = "sudo apt update && sudo apt install git ansible; sudo ansible-playbook k8s-node-playbook.yml"
+}
+
+variable num_workers {
+  default     = 3
+}
+
+variable access_config {
+  default     = []
 }

@@ -8,19 +8,12 @@ resource "google_compute_instance" "k8s-master" {
   zone         = "${var.zone}"
 
   network_interface {
-    network            = "${var.subnetwork == "" ? var.network : ""}"
-    subnetwork         = "${var.subnetwork}"
+    network            = "${var.network_name}"
+    subnetwork         = "${var.subnet_name}"
     access_config      = ["${var.access_config}"]
-    network_ip         = "${var.network_ip}"
-    subnetwork_project = "${var.subnetwork_project == "" ? var.project : var.subnetwork_project}"
+    network_ip         = "${var.master_ip}"
+    subnetwork_project = "${var.project}"
   }
 
-  # metadata_startup_script = "echo hi > /test.txt"
-
-  service_account {
-    email  = "${var.service_account_email}"
-    scopes = ["${var.service_account_scopes}"]
-  }
-
-  metadata_startup_script = "${var.startup_script}"
+  metadata_startup_script = "${var.startup_script_master}"
 }

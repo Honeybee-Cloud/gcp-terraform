@@ -1,5 +1,5 @@
 resource "google_compute_instance" "k8s-worker" {
-  count       = 3
+  count       = var.num_workers
   project     = "${var.project}"
 
   machine_type = "${var.machine_type}"
@@ -23,11 +23,6 @@ resource "google_compute_instance" "k8s-worker" {
     disk_size_gb = "${var.disk_size_gb}"
     mode         = "${var.mode}"
   }
-
-  service_account {
-    email  = "${var.service_account_email}"
-    scopes = ["${var.service_account_scopes}"]
-  }
-
-  metadata_startup_script = "${var.startup_script}"
+  
+  metadata_startup_script = "${var.startup_script_worker}"
 }
