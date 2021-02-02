@@ -8,13 +8,13 @@ resource "google_compute_instance" "k8s-master" {
   zone         = var.zone
 
   provisioner "file" {
-    source      = "./k8s-base-playbook.yml"
-    destination = "/root/k8s-base-playbook.yml"
+    source      = "k8s-base-playbook.yml"
+    destination = "k8s-base-playbook.yml"
   }
 
   provisioner "file" {
-    source      = "./k8s-master-playbook.yml"
-    destination = "/root/k8s-master-playbook.yml"
+    source      = "k8s-master-playbook.yml"
+    destination = "k8s-master-playbook.yml"
   }
 
   boot_disk {
@@ -24,8 +24,8 @@ resource "google_compute_instance" "k8s-master" {
   }
 
   network_interface {
-    network            = var.network_name
-    subnetwork         = var.subnet_name
+    network            = local.vpc_network_id
+    subnetwork         = local.vpc_network_subnet_id
     network_ip         = var.master_ip
     subnetwork_project = var.project_id
   }

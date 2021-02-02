@@ -27,3 +27,8 @@ resource "google_compute_network" "vpc_network" {
   name = var.network_name
   auto_create_subnetworks = false
 }
+
+locals {
+  vpc_network_id = google_compute_network.vpc_network.id
+  vpc_network_subnet_id = google_compute_subnetwork.vpc_network_subnet.id
+}
