@@ -6,15 +6,8 @@ resource "google_compute_instance" "k8s-master" {
   name         = "k8s-master"
   machine_type = var.machine_type
   zone         = var.zone
-
-  provisioner "file" {
-    source      = "k8s-base-playbook.yml"
-    destination = "k8s-base-playbook.yml"
-  }
-
-  provisioner "file" {
-    source      = "k8s-master-playbook.yml"
-    destination = "k8s-master-playbook.yml"
+  connection {
+    host = var.master_ip
   }
 
   boot_disk {

@@ -70,12 +70,12 @@ variable google_apis_url {
 
 variable startup_script_master {
   description = "The startup script to run on the master"
-  default     = "sudo apt update && sudo apt install git ansible && sudo ansible-playbook k8s-master-playbook.yml"
+  default     = "sudo apt update && sudo apt install git ansible; wget https://raw.githubusercontent.com/Honeybee-Cloud/gcp-terraform/main/k8s-base-playbook.yml; wget https://raw.githubusercontent.com/Honeybee-Cloud/gcp-terraform/main/k8s-master-playbook.yml; sudo ansible-playbook k8s-master-playbook.yml"
 }
 
 variable startup_script_worker {
   description = "The startup script to run on the workers"
-  default     = "sudo apt update && sudo apt install git ansible && sudo ansible-playbook k8s-node-playbook.yml"
+  default     = "sudo apt update && sudo apt install wget git ansible; wget https://raw.githubusercontent.com/Honeybee-Cloud/gcp-terraform/main/k8s-base-playbook.yml; wget https://raw.githubusercontent.com/Honeybee-Cloud/gcp-terraform/main/k8s-node-playbook.yml; sudo ansible-playbook k8s-node-playbook.yml"
 }
 
 variable num_workers {
