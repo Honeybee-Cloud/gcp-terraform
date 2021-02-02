@@ -24,9 +24,6 @@ resource "google_compute_instance" "k8s-master" {
   }
 
   network_interface {
-    access_config {
-      nat_ip = var.access_config
-    }
     network            = var.network_name
     subnetwork         = var.subnet_name
     network_ip         = var.master_ip

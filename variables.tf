@@ -15,7 +15,7 @@ variable cluster_name {
 
 variable master_ip {
   description = "IP of the master server"
-  default     = "10.128.0.2"
+  default     = "10.128.0.128"
 }
 
 variable subnet_range {

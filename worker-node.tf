@@ -25,9 +25,6 @@ resource "google_compute_instance" "k8s-worker" {
   network_interface {
     network            = var.network_name
     subnetwork         = var.subnet_name
-    access_config {
-      nat_ip = var.access_config
-    }
     subnetwork_project = var.project_id
   }
 
