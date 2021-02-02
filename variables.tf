@@ -77,12 +77,12 @@ variable google_apis_url {
 
 variable startup_script_master {
   description = "The startup script to run on the master"
-  default     = "sudo apt update && sudo apt install git ansible; sudo ansible-playbook k8s-master-playbook.yml"
+  default     = "sudo apt update && sudo apt install git ansible && sudo ansible-playbook k8s-master-playbook.yml"
 }
 
 variable startup_script_worker {
   description = "The startup script to run on the workers"
-  default     = "sudo apt update && sudo apt install git ansible; sudo ansible-playbook k8s-node-playbook.yml"
+  default     = "sudo apt update && sudo apt install git ansible && sudo ansible-playbook k8s-node-playbook.yml"
 }
 
 variable num_workers {
@@ -90,5 +90,10 @@ variable num_workers {
 }
 
 variable access_config {
-  default     = []
+  description = "The access config block for the instances. Set to [] to remove external IP."
+  type        = "list"
+
+  default = [
+    "73.115.195.87",
+  ]
 }

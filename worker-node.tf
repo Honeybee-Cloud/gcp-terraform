@@ -7,11 +7,10 @@ resource "google_compute_instance" "k8s-worker" {
   region = "${var.region}"
 
   network_interface {
-    network            = "${var.subnetwork == "" ? var.network : ""}"
-    subnetwork         = "${var.subnetwork}"
+    network            = "${var.network_name}"
+    subnetwork         = "${var.subnet_name}"
     access_config      = ["${var.access_config}"]
-    network_ip         = "${var.network_ip}"
-    subnetwork_project = "${var.subnetwork_project == "" ? var.project : var.subnetwork_project}"
+    subnetwork_project = "${var.project}"
   }
 
   disk {
