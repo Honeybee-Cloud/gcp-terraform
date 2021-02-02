@@ -16,7 +16,7 @@ resource "google_compute_firewall" "k8s-firewall-ingress" {
   }
 
   direction = "INGRESS"
-  source_ranges = [ "10.240.0.0/24" ]
+  source_ranges = [ "10.128.0.0/24" ]
 }
 
 resource "google_compute_firewall" "k8s-firewall-egress" {
@@ -36,5 +36,5 @@ resource "google_compute_firewall" "k8s-firewall-egress" {
   }
 
   direction = "EGRESS"
-  source_ranges = [ "0.0.0.0/0" ]
+  source_ranges = [ "73.115.195.87/32" ]
 }

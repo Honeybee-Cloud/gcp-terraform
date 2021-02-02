@@ -6,6 +6,16 @@ resource "google_compute_instance" "k8s-worker" {
   machine_type = var.machine_type
   zone = var.zone
 
+  provisioner "file" {
+    source      = "./k8s-base-playbook.yml"
+    destination = "/root/k8s-base-playbook.yml"
+  }
+
+  provisioner "file" {
+    source      = "./k8s-node-playbook.yml"
+    destination = "/root/k8s-node-playbook.yml"
+  }
+
   boot_disk {
     initialize_params {
       image = var.instances_os
