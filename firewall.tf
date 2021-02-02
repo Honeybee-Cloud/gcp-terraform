@@ -25,11 +25,11 @@ resource "google_compute_firewall" "k8s-firewall-egress" {
 
   allow {
     protocol = "tcp"
-    pports = [ "6443" ]
+    ports = [ "6443" ]
   }
   allow {
     protocol = "tcp"
-    pports = [ "22" ]
+    ports = [ "22" ]
   }
   allow {
     protocol = "icmp"

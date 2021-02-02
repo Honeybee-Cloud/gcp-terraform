@@ -15,7 +15,7 @@ variable cluster_name {
 
 variable master_ip {
   description = "IP of the master server"
-  default     = "10.128.0.19"
+  default     = "10.128.0.2"
 }
 
 variable subnet_range {
@@ -36,13 +36,6 @@ variable network_name {
 variable k8s_version {
   description = "The Version of kubernetes to be installed on the cluster"
   default     = "1.11.8"
-}
-
-# This is for SSH (22) and Kube Proxy (8080)
-variable ssh_source_ranges {
-  description = "Network ranges to allow SSH from"
-  type        = "list"
-  default     = []
 }
 
 variable cloud_provider {
@@ -91,9 +84,17 @@ variable num_workers {
 
 variable access_config {
   description = "The access config block for the instances. Set to [] to remove external IP."
-  type        = "list"
+  default = "73.115.195.87"
+}
 
-  default = [
-    "73.115.195.87",
-  ]
+variable creds_path {
+  default     = "credentials/credentials.json"
+}
+
+variable instances_os {
+  default     = "ubuntu-2004-lts"
+}
+
+variable machine_type {
+  default     = " f1-micro"
 }
