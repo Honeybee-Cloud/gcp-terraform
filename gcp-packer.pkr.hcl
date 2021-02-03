@@ -25,11 +25,4 @@ build {
       "sudo apt-get install -y git ansible apt-transport-https ca-certificates curl gnupg-agent software-properties-common"
     ]
   }
-
-  provisioner "ansible-local": [
-    {
-      playbook_files     = ["./k8s-master-playbook.yml", "./k8s-base-playbook.yml", "./k8s-node-playbook.yml"]
-      
-    }
-  ]
 }
