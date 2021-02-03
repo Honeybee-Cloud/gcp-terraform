@@ -28,7 +28,8 @@ build {
 
   provisioner "ansible-local": [
     {
-      playbook_files     = ["./k8s-master-playbook.yml", "./k8s-base-playbook.yml"]
+      playbook_files     = ["./k8s-master-playbook.yml", "./k8s-base-playbook.yml", "./k8s-node-playbook.yml"]
+      
     }
   ]
 }

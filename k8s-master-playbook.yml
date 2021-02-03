@@ -6,26 +6,7 @@
 
   - name: Initialize the Kubernetes cluster using kubeadm
     command: kubeadm init --apiserver-advertise-address="192.168.50.10" --apiserver-cert-extra-sans="192.168.50.10"  --node-name k8s-master --pod-network-cidr=192.168.0.0/16
-
-  - name: Create the Vagrant user kube folder
-    file:
-      path: /home/vagrant/.kube
-      state: directory
-      owner: vagrant
-      group: vagrant
-
-  - name: Copy k8s config to vagrant user
-    copy:
-      src: /etc/kubernetes/admin.conf
-      dest: /home/vagrant/.kube/config
-      remote_src: yes
-      owner: vagrant
-      group: vagrant
-
-  - name: Install calico pod network
-    become: false
-    command: kubectl create -f https://docs.projectcalico.org/manifests/calico.yaml
-
+    
   - name: Generate join command
     shell: kubeadm token create --print-join-command >> /root/join-command
 
